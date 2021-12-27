@@ -15,19 +15,19 @@ using namespace std;
 using namespace cv;
 
 vector<string> search_folder(string folder_pth, string img_typ);                  // 函数: 索引原图所在的文件夹，并将images的path存放在vector中.
-Mat img_procs(Mat temp_img, string img_pth, int means[], int size[]);        // 函数: 对原图进行预处理.
-vector<string> split_ch(const string& ch, const char pattern);                     // 函数: 字符串处理，保存预处理图像，进行命名方式操作. 
+Mat img_procs(Mat temp_img, string img_pth, int means[], int size[]);             // 函数: 对原图进行预处理.
+vector<string> split_ch(const string& ch, const char pattern);                    // 函数: 字符串处理，保存预处理图像，进行命名方式操作. 
 
 int main(){
 	
-	string img_folder = ".......\\..........\\..........";                                                  // 改成image文件夹对应的path
-	string img_type = ".jpg";                                                                             // 待需索取的image TYPE类型(i.e.  jpg\png\bmp and so on...)
+	string img_folder = ".......\\..........\\..........";                                  // 改成image文件夹对应的path
+	string img_type = ".jpg";                                                               // 待需索取的image TYPE类型(i.e.  jpg\png\bmp and so on...)
 	vector<string> imgs_path;
-	int means_value[3] = { 100, 100, 100 };                                                       // 预设的均值参数
-	int para_size[2] = { 224, 224 };                                                                     // 预设resize的大小
+	int means_value[3] = { 100, 100, 100 };                                                 // 预设的均值参数
+	int para_size[2] = { 224, 224 };                                                        // 预设resize的大小
 	Mat img_tmp;
 
-	imgs_path = search_folder(img_folder, img_type);                                    // 将硬盘folder中的images，读入内存处理，并保持在vector中.
+	imgs_path = search_folder(img_folder, img_type);                                        // 将硬盘folder中的images，读入内存处理，并保持在vector中.
 	for (int i = 0; i < imgs_path.size(); i++) {
 		img_tmp = img_procs(img_tmp, imgs_path[i], means_value, para_size);
 	}
@@ -39,7 +39,7 @@ vector<string> search_folder(string folder_pth, string img_typ) {
 	
 	long long head_imgs;
 	vector<string> imgs_pth;
-	struct _finddata_t  folder_stc;                                                                      // 将folder利用一个结构体保存，其中的files可通过pointer指针按一种链表的数据结构-进行-read or process.
+	struct _finddata_t  folder_stc;                                    // 将folder利用一个结构体保存，其中的files可通过pointer指针按一种链表的数据结构-进行-read or process.
 	string format_img, img_name;
 
 	format_img = format_img.assign(folder_pth).append("\\*" + img_typ);
@@ -77,7 +77,7 @@ Mat img_procs(Mat temp_img, string img_pth, int *means, int *size) {
 		for (int c = 0; c < 3; c++) {
 			for (int i = 0; i < source_img.rows; i++) {
 				for (int j = 0; j < source_img.cols; j++) {
-					preprocs_img.at<Vec3b>(i, j)[c] = saturate_cast<uchar>(source_img.at<Vec3b>(i, j)[c] - means[c]);                           // 注意使用 saturate_cast<uchar>的作用
+					preprocs_img.at<Vec3b>(i, j)[c] = saturate_cast<uchar>(source_img.at<Vec3b>(i, j)[c] - means[c]);   // 注意使用 saturate_cast<uchar>的作用
 				}
 			}
 		}
